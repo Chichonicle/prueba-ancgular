@@ -1,7 +1,9 @@
-<div *ngFor="let user of clients">
-    <h1>{{ user.first_name }}</h1>
-    <img src="{{ user.avatar }}" alt="{{ user.first_name }}">
+<div class="client-component">
+    <div *ngFor="let user of clients">
+        <h1>{{ user.first_name }}</h1>
+        <img src="{{ user.avatar }}" alt="{{ user.first_name }}">
+    </div>
 </div>
 <div>
-<button (click)="fetchUsers()">Traer usuarios</button>
+    <button class="users" (click)="fetchUsers()">Listar usuarios</button>
 </div>
