@@ -1,8 +1,16 @@
-<div>
-  <h1>Prueba Técnica</h1>
-  <div>
-      <button>Ver todos los usuarios<app-user/></button>
-      <button>Buscar usuario<app-single-user/></button>
-      <button>Login<app-login/></button>
-  </div>
+<h1 id="title">PRUEBA TECNICA </h1>
+<div id="botonera">
+
+    <a routerLink="/prueba/login">
+        <div class="boton">Login</div>
+    </a>
+
+    <a routerLink="/prueba/users">
+        <div class="boton">Users</div>
+    </a>
+
+    <a routerLink="/prueba/single-user">
+        <div class="boton">Single users</div>
+    </a>
 </div>
+<router-outlet></router-outlet>
