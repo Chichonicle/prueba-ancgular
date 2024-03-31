@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -13,6 +12,14 @@ export class UserComponent {
   http = inject(HttpClient);
   clients: any = [];
   pages: number = 2;
+  filteredClient: any;
+  details: boolean = false;
+  usuariodetalle: any;
+
+  constructor() {
+    this.fetchUsers();
+    this.filteredClient = [];
+  }
 
   fetchUsers() {
     for (let i = 1; i <= this.pages; i++) {
@@ -22,5 +29,18 @@ export class UserComponent {
           this.clients = [...this.clients, ...clients.data];
         });
     }
+  }
+
+  showDetails(clientId: number) {
+    this.details = true;
+    this.filteredClient = this.clients.filter(
+      (client: any) => client.id === clientId
+    );
+    this.usuariodetalle = this.filteredClient[0];
+    console.log(this.usuariodetalle);
+  }
+
+  closeDetails() {
+    this.details = false;
   }
 }
