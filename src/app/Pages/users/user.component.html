@@ -1,0 +1,26 @@
+<div *ngIf="authorized; else notLoggedIn">
+    <div class="client-component">
+        <div *ngFor="let user of clients">
+            <h1>{{ user.first_name }}</h1>
+            <div class="image"><img [src]="user.avatar" [alt]="user.first_name"></div>
+            <button (click)="showDetails(user.id)"> Detalles </button>
+        </div>
+    </div>
+    <div>
+        <button class="users" (click)="fetchUsers()">Listar usuarios</button>
+    </div>
+</div>
+<div *ngIf="details" class="details-overlay">
+    <div class="details-container">
+        <h2>Tu usuario:</h2>
+        <p>Id: {{ usuariodetalle.id }}</p>
+        <p>Nombre: {{ usuariodetalle.first_name }}</p>
+        <p>Apellido: {{ usuariodetalle.last_name }}</p>
+        <p>Email: {{ usuariodetalle.email }}</p>
+        <button (click)="closeDetails()" class="close-button">Cerrar</button>
+    </div>
+</div>
+
+<ng-template #notLoggedIn>
+    <p>Debes hacer login para ver los detalles de un usuario</p>
+</ng-template>
