@@ -20,5 +20,7 @@ import { SingleUserComponent } from './Pages/single-user/single-user.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'angular';
+  title = 'Prueba Tecnica';
+
+  
 }
