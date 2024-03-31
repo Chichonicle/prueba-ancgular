@@ -16,14 +16,34 @@ export class LoginComponent {
   password: string;
   token: any;
   logedIn: boolean;
-  error:boolean;
-
+  error: boolean;
+  pages: number;
+  emails: any = [];
 
   constructor() {
     this.email = '';
     this.password = '';
     this.logedIn = false;
-    this.error=false;
+    this.error = false;
+    this.pages = 2;
+  }
+
+  ngOnInit() {
+    this.fetchEmails();
+  }
+
+  fetchEmails() {
+    for (let i = 1; i <= this.pages; i++) {
+      this.http
+        .get(`https://reqres.in/api/users?page=${i}`)
+        .subscribe((emails: any) => {
+          this.emails = [
+            ...this.emails,
+            ...emails.data.map((email: any) => email.email),
+          ];
+          return this.emails;
+        });
+    }
   }
 
   login() {
@@ -34,16 +54,32 @@ export class LoginComponent {
     const url = 'https://reqres.in/api/login';
 
     if (this.email === '' || this.password === '') {
-      console.log('Email o Password vacios');
-      this.error=true;
-      return;
+      this.error = true;
+      setTimeout(() => {
+        this.error = false;
+      }, 2000);
+      localStorage.setItem('token', '');
+    }
+
+    if (!this.emails.includes(this.email)) {
+      this.error = true;
+      setTimeout(() => {
+        this.error = false;
+      }, 2000);
+      localStorage.setItem('token', '');
     }
 
     this.http.post(url, data).subscribe((response: any) => {
-      console.log(response);
       this.token = response.token;
-      this.logedIn = true;
+      localStorage.setItem('token', this.token);
+
+      if (this.token !== '') {
+        console.log('Login correcto');
+        this.logedIn = true;
+      } else {
+        console.log('Login erroneo');
+        this.logedIn = false;
+      }
     });
-    console.log(`Logeado con Email: ${this.email}, Password: ${this.password}`);
   }
 }
